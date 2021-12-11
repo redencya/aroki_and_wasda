@@ -64,8 +64,7 @@ public class Actor : KinematicBody2D
 				break;
 		}
 	}
-
-	public void StopMoving(Direction myDir, MoveType moveType = Linear)
+	public void MoveStop(Direction myDir, MoveType moveType = Linear)
 	{
 		switch (moveType)
 		{
