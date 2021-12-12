@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using Game.Extensions;
 using static Game.Actor.MoveType;
 using static Game.Actor.Direction;
 
@@ -23,14 +24,9 @@ namespace Game
 
 		public const float gravity = 9.667f * 100;
 
-		public float moveAccel;
-		public float moveDecel;
+		public (float Accel, float Decel, float Speed, float JumpHeight) move;
 
-		public float moveSpeed;
-		public float moveJumpHeight;
 		public Vector2 Velocity = Vector2.Zero;
-
-		//public Func<Direction, Direction> InvertDirection = myDir => (myDir == Right) ? Left : Right;
 
 		/// <summary>
 		/// This function is used to implement basic movement.
@@ -48,42 +44,31 @@ namespace Game
 		/// </summary>
 		/// <param name="myDir"></param>
 		/// <param name="moveType"></param>
-		public void Move(Direction myDir, MoveType moveType = Linear)
+		public void Move(Direction myDir, MoveType moveType = Linear, bool isMoving = true)
 		{
 			switch (moveType)
 			{
-				case Linear:
-					Velocity.x = moveSpeed * (int)myDir;
+				case Linear when isMoving:
+					Velocity.x = move.Speed * (int)myDir;
 					break;
-
-				case Exponential:
-					Velocity.x = (myDir == Right) ?
-						Math.Min(Velocity.x + moveAccel, moveSpeed) :
-						Math.Max(Velocity.x - moveAccel, -moveSpeed);
-					break;
-			}
-		}
-		public void MoveStop(Direction myDir, MoveType moveType = Linear)
-		{
-			switch (moveType)
-			{
-				case Linear:
+				case Linear when !isMoving:
 					Velocity.x = 0;
 					break;
 
-				case Exponential:
-					Velocity.x = (myDir == Right) ?
-						Math.Max(Velocity.x - moveDecel, 0) :
-						Math.Min(Velocity.x + moveDecel, 0);
+				case Exponential when isMoving:
+					Velocity.x = (myDir == Right) ? Math.Min(Velocity.x + move.Accel, move.Speed) : Math.Max(Velocity.x - move.Accel, -move.Speed);
+					break;
+				case Exponential when !isMoving:
+					Velocity.x = (myDir == Right) ? Math.Max(Velocity.x - move.Decel, 0) : Math.Min(Velocity.x + move.Decel, 0);
 					break;
 			}
 		}
 
-		public void Jump(bool condition)
+		public void Jump(bool condition = true)
 		{
 			if (condition)
 			{
-				Velocity.y = moveJumpHeight;
+				Velocity.y = move.JumpHeight;
 			}
 
 		}

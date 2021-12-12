@@ -27,3 +27,4 @@ shape = SubResource( 1 )
 
 [node name="KinematicBody2D" parent="." instance=ExtResource( 1 )]
 position = Vector2( 203, 154 )
+currentMoveMode = 0

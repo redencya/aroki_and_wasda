@@ -3,11 +3,11 @@ using System;
 using Game.Extensions;
 using static Game.Actor.MoveType;
 using static Game.Actor.Direction;
-using static Game.Player.MoveMode;
+using static Game.PlayerController.MoveMode;
 
 namespace Game
 {
-	public class Player : Actor
+	public class PlayerController : Actor
 	{
 		public enum MoveMode
 		{
@@ -27,10 +27,6 @@ namespace Game
 		public void DefineMovement(MoveMode myMode = Regular)
 		{
 			// value assignment for Actor variables related to movement
-			moveAccel = (IsOnFloor()) ? groundAccel : airAccel;
-			moveDecel = (IsOnFloor()) ? groundDecel : airDecel;
-			moveSpeed = 2.95f * 100;
-			moveJumpHeight = -5.5f * 100;
 
 			switch (myMode)
 			{
@@ -39,40 +35,39 @@ namespace Game
 					break;
 			}
 		}
-		// build a template for movement modes with this
+		// build a template for movement modes with this - now boiled down to Flip, Move and Jump for convenience!
 		public void TemplateMovement()
 		{
-			if (HoldTime.isTapped() && !HoldTime.isActive)
-			{
-				currentDirection.Flip();
-			}
+			move.Accel = (IsOnFloor()) ? groundAccel : airAccel;
+			move.Decel = (IsOnFloor()) ? groundDecel : airDecel;
+			move.Speed = 2.95f * 100;
+			move.JumpHeight = -5.5f * 100;
 
-			if (HoldTime.isHeld() && HoldTime.isActive)
-			{
-				Move(currentDirection, Exponential);
-			}
-			else if (HoldTime.isHeld())
-			{
-				Jump(IsOnFloor());
-			}
+			// IF you tap, you flip the character
+			// Unless you're on a sticky surface, then you do that AND rebound from the surface
+			if (HoldTime.isTapped()) { currentDirection = currentDirection.Flip(); }
 
-			if (!HoldTime.isActive && Velocity.x != 0)
-			{
-				MoveStop(currentDirection, Exponential);
-			}
+			// MOVE
+			// IF you actively hold down the action key
+			if (HoldTime.isHeld(true)) { Move(currentDirection, Exponential); }
+
+			// JUMP
+			// IF you held the key but you're no longer holding it
+			else if (HoldTime.isHeld(false)) { Jump(IsOnFloor()); }
 		}
 
 		public override void _PhysicsProcess(float delta)
 		{
 			base._PhysicsProcess(delta);
 			DefineMovement(currentMoveMode);
+			Move(currentDirection, Exponential, false);
 			ApplyMovement(delta);
 			HoldTime.Reset();
 		}
 		public override void _Process(float delta)
 		{
 			base._Process(delta);
-			HoldTime.Calc(delta);
+			HoldTime.IncrementBy(delta);
 			GD.Print($"{Velocity.x} {currentDirection}");
 		}
 	}
