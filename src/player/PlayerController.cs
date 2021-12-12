@@ -36,12 +36,16 @@ namespace Game
 			// value assignment for Actor variables related to movement
 			move.Accel = (IsOnFloor()) ? value.Accel.Ground : value.Accel.Air ;
 			move.Decel = (IsOnFloor()) ? value.Decel.Ground : value.Decel.Air ;
-			move.Speed = 2.95f * 100;
-			move.JumpHeight = -5.5f * 100;
+			move.Speed = 1.95f * 100;
+			move.JumpHeight = -3.62f * 100;
+			AnimatedSprite mySprite = GetNode<AnimatedSprite>("Icon");
 
 			// IF you tap, you flip the character
 			// Unless you're on a sticky surface, then you do that AND rebound from the surface
-			if (HoldTime.isTapped()) { currentDirection = currentDirection.Flip(); }
+			if (HoldTime.isTapped()) { 
+				currentDirection = currentDirection.Flip();
+				mySprite.FlipH = !mySprite.IsFlippedH();
+			}
 
 			// MOVE
 			// IF you actively hold down the action key

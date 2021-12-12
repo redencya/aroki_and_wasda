@@ -4,7 +4,7 @@
 [ext_resource path="res://src/player/PlayerSpawner.tscn" type="PackedScene" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 142, 23.5 )
+extents = Vector2( 71.625, 8.0625 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 525.5, 31.5 )
@@ -14,23 +14,23 @@ extents = Vector2( 525.5, 31.5 )
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2( 193, 224 )
+position = Vector2( 458, 225 )
 shape = SubResource( 1 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2( 476, 367 )
+position = Vector2( 414, 121 )
 shape = SubResource( 1 )
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2( 760, 418 )
+position = Vector2( 314, 225 )
 shape = SubResource( 1 )
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2( 647, 128 )
+position = Vector2( 149, 171 )
 shape = SubResource( 1 )
 
 [node name="Position2D" parent="." instance=ExtResource( 2 )]
-position = Vector2( 181, 76 )
+position = Vector2( 151, 86 )
 
 [node name="Area2D" type="Area2D" parent="."]
 script = ExtResource( 1 )

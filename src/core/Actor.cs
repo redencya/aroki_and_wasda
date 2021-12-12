@@ -22,7 +22,7 @@ namespace Game
 			Exponential
 		}
 
-		public const float gravity = 9.667f * 100;
+		public const float gravity = 8.667f * 100;
 
 		public (float Accel, float Decel, float Speed, float JumpHeight) move;
 
@@ -77,7 +77,6 @@ namespace Game
         {
 			QueueFree();
         }
-
 
 		public void ApplyMovement(float delta)
 		{
