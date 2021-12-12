@@ -20,6 +20,7 @@ namespace Game
 
 		// Cache of constants for movement
 		private ((float Air, float Ground) Accel, (float Air, float Ground) Decel) value = ((12f, 17f) , (27f, 33f));
+		public bool wasOnFloor = false;
 
 		public void DefineMovement(MoveMode myMode = Regular)
 		{
@@ -37,13 +38,14 @@ namespace Game
 			move.Accel = (IsOnFloor()) ? value.Accel.Ground : value.Accel.Air ;
 			move.Decel = (IsOnFloor()) ? value.Decel.Ground : value.Decel.Air ;
 			move.Speed = 1.95f * 100;
-			move.JumpHeight = -3.62f * 100;
+			move.JumpHeight = -2.96f * 100;
 			AnimatedSprite mySprite = GetNode<AnimatedSprite>("Icon");
 
 			// IF you tap, you flip the character
 			// Unless you're on a sticky surface, then you do that AND rebound from the surface
 			if (HoldTime.isTapped()) { 
 				currentDirection = currentDirection.Flip();
+				// for now it can stay, but it's deprecated so would be good to fix it
 				mySprite.FlipH = !mySprite.IsFlippedH();
 			}
 
@@ -53,7 +55,7 @@ namespace Game
 
 			// JUMP
 			// IF you held the key but you're no longer holding it
-			else if (HoldTime.isHeld(false)) { Jump(IsOnFloor()); }
+			else if (HoldTime.isHeld(false)) { Jump(IsOnFloor() || wasOnFloor); }
 			
 			if (!HoldTime.isActive && Velocity.x != 0) { Move(currentDirection, Exponential, false); }
 		}
