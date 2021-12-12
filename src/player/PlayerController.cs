@@ -19,10 +19,7 @@ namespace Game
 		public MoveMode currentMoveMode = Regular;
 
 		// Cache of constants for movement
-		private const float airAccel = 12f;
-		private const float groundAccel = 17f;
-		private const float airDecel = 27f;
-		private const float groundDecel = 33f;
+		private ((float Air, float Ground) Accel, (float Air, float Ground) Decel) value = ((12f, 17f) , (27f, 33f));
 
 		public void DefineMovement(MoveMode myMode = Regular)
 		{
@@ -37,8 +34,8 @@ namespace Game
 		public void TemplateMovement()
 		{
 			// value assignment for Actor variables related to movement
-			move.Accel = (IsOnFloor()) ? groundAccel : airAccel;
-			move.Decel = (IsOnFloor()) ? groundDecel : airDecel;
+			move.Accel = (IsOnFloor()) ? value.Accel.Ground : value.Accel.Air ;
+			move.Decel = (IsOnFloor()) ? value.Decel.Ground : value.Decel.Air ;
 			move.Speed = 2.95f * 100;
 			move.JumpHeight = -5.5f * 100;
 
