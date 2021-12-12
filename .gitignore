@@ -6,3 +6,5 @@ export_presets.cfg
 
 # Mono-specific ignores
 .mono/
+.vs/AROKI_AND_WASDA/DesignTimeBuild/.dtbcache.v2
+.vs/AROKI_AND_WASDA/v16/.suo
