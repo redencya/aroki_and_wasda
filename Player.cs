@@ -1,74 +1,79 @@
 using Godot;
 using System;
-using static Actor.MoveType;
-using static Actor.Direction;
-using static Player.MoveMode;
+using Game.Extensions;
+using static Game.Actor.MoveType;
+using static Game.Actor.Direction;
+using static Game.Player.MoveMode;
 
-public class Player : Actor
+namespace Game
 {
-	public enum MoveMode
+	public class Player : Actor
 	{
-		Regular,
-		Swimming,
-	}
-
-	private Direction currentDirection = Right;
-	private MoveMode currentMoveMode = Regular;
-
-	// Cache of constants for movement
-	private const float airAccel = 12f;
-	private const float groundAccel = 17f;
-	private const float airDecel = 27f;
-	private const float groundDecel = 33f;
-
-	public void DefineMovement(MoveMode myMode = Regular)
-	{
-		moveAccel = (IsOnFloor()) ? groundAccel : airAccel;
-		moveDecel = (IsOnFloor()) ? groundDecel : airDecel;
-		moveSpeed = 2.95f * 100;
-		moveJumpHeight = -5.5f * 100;
-
-		switch (myMode)
-        {
-			case Regular:
-				TemplateMovement();
-				break;
-        }
-	}
-	// build a template for movement modes with this
-	public void TemplateMovement()
-    {
-		if (HoldTime.isTapped() && !HoldTime.isActive)
+		public enum MoveMode
 		{
-			currentDirection = InvertDirection(currentDirection);
+			Regular,
+			Swimming,
 		}
 
-		if (HoldTime.isHeld() && HoldTime.isActive)
+		public Direction currentDirection = Right;
+		public MoveMode currentMoveMode = Regular;
+
+		// Cache of constants for movement
+		private const float airAccel = 12f;
+		private const float groundAccel = 17f;
+		private const float airDecel = 27f;
+		private const float groundDecel = 33f;
+
+		public void DefineMovement(MoveMode myMode = Regular)
 		{
-			Move(currentDirection, Exponential);
+			// value assignment for Actor variables related to movement
+			moveAccel = (IsOnFloor()) ? groundAccel : airAccel;
+			moveDecel = (IsOnFloor()) ? groundDecel : airDecel;
+			moveSpeed = 2.95f * 100;
+			moveJumpHeight = -5.5f * 100;
+
+			switch (myMode)
+			{
+				case Regular:
+					TemplateMovement();
+					break;
+			}
 		}
-		else if (HoldTime.isHeld())
+		// build a template for movement modes with this
+		public void TemplateMovement()
 		{
-			Jump(IsOnFloor());
+			if (HoldTime.isTapped() && !HoldTime.isActive)
+			{
+				currentDirection.Flip();
+			}
+
+			if (HoldTime.isHeld() && HoldTime.isActive)
+			{
+				Move(currentDirection, Exponential);
+			}
+			else if (HoldTime.isHeld())
+			{
+				Jump(IsOnFloor());
+			}
+
+			if (!HoldTime.isActive && Velocity.x != 0)
+			{
+				MoveStop(currentDirection, Exponential);
+			}
 		}
 
-		if (!HoldTime.isActive && Velocity.x != 0)
+		public override void _PhysicsProcess(float delta)
 		{
-			MoveStop(currentDirection, Exponential);
+			base._PhysicsProcess(delta);
+			DefineMovement(currentMoveMode);
+			ApplyMovement(delta);
+			HoldTime.Reset();
 		}
-	}
-
-	public override void _PhysicsProcess(float delta)
-	{
-		base._PhysicsProcess(delta);
-		DefineMovement();
-		ApplyMovement(delta);
-		HoldTime.Reset();
-	}
-	public override void _Process(float delta)
-	{
-		base._Process(delta);
-		HoldTime.Calc(delta);
-		GD.Print($"{Velocity.x} {currentDirection}");
+		public override void _Process(float delta)
+		{
+			base._Process(delta);
+			HoldTime.Calc(delta);
+			GD.Print($"{Velocity.x} {currentDirection}");
+		}
 	}
 }
