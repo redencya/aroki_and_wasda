@@ -3,7 +3,7 @@ using System;
 
 public class PlayerSpawner : Position2D
 {
-    private PackedScene PlayerRef = (PackedScene)ResourceLoader.Load("res://Player.tscn");
+    private PackedScene PlayerRef = (PackedScene)ResourceLoader.Load("res://src/player/Player.tscn");
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
