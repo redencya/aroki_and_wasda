@@ -54,13 +54,14 @@ namespace Game
 			// JUMP
 			// IF you held the key but you're no longer holding it
 			else if (HoldTime.isHeld(false)) { Jump(IsOnFloor()); }
+			
+			if (!HoldTime.isActive && Velocity.x != 0) { Move(currentDirection, Exponential, false); }
 		}
 
 		public override void _PhysicsProcess(float delta)
 		{
 			base._PhysicsProcess(delta);
 			DefineMovement(currentMoveMode);
-			Move(currentDirection, Exponential, false);
 			ApplyMovement(delta);
 			HoldTime.Reset();
 		}
