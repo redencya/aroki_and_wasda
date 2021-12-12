@@ -27,11 +27,7 @@ public class Actor : KinematicBody2D
 	public float moveJumpHeight;
 	public Vector2 Velocity = Vector2.Zero;
 
-
-	public Direction InvertDirection(Direction myDir)
-	{
-		return (myDir == Right) ? Left : Right;
-	}
+	public Func<Direction, Direction> InvertDirection = myDir => (myDir == Right) ? Left : Right;
 
 	/// <summary>
 	/// This function is used to implement basic movement.
@@ -80,12 +76,13 @@ public class Actor : KinematicBody2D
 		}
 	}
 
-		public void Jump()
+	public void Jump(bool condition)
 	{
-		if (IsOnFloor())
-		{
+		if (condition)
+        {
 			Velocity.y = moveJumpHeight;
 		}
+
 	}
 
 
