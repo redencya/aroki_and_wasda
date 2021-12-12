@@ -26,8 +26,6 @@ namespace Game
 
 		public void DefineMovement(MoveMode myMode = Regular)
 		{
-			// value assignment for Actor variables related to movement
-
 			switch (myMode)
 			{
 				case Regular:
@@ -38,6 +36,7 @@ namespace Game
 		// build a template for movement modes with this - now boiled down to Flip, Move and Jump for convenience!
 		public void TemplateMovement()
 		{
+			// value assignment for Actor variables related to movement
 			move.Accel = (IsOnFloor()) ? groundAccel : airAccel;
 			move.Decel = (IsOnFloor()) ? groundDecel : airDecel;
 			move.Speed = 2.95f * 100;
@@ -71,5 +70,11 @@ namespace Game
 			HoldTime.IncrementBy(delta);
 			GD.Print($"{Velocity.x} {currentDirection}");
 		}
+
+		internal class MovementTemplate
+        {
+			// This should be an easy-to-repeat, scaleable solution for implementing new gamemodes using the Tap | Hold | Release inputs.
+			// 
+        }
 	}
 }

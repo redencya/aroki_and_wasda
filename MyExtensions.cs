@@ -1,7 +1,7 @@
 using Godot;
 using System;
 using static Game.Actor;
-using static Game.Player;
+using static Game.PlayerController;
 using static Game.Actor.Direction;
 
 namespace Game.Extensions

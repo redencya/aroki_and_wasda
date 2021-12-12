@@ -73,6 +73,11 @@ namespace Game
 
 		}
 
+		public void Die()
+        {
+			QueueFree();
+        }
+
 
 		public void ApplyMovement(float delta)
 		{
