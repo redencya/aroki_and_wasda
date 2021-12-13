@@ -39,7 +39,6 @@ namespace Game
 			move.Decel = (IsOnFloor()) ? value.Decel.Ground : value.Decel.Air ;
 			move.Speed = 1.95f * 100;
 			move.JumpHeight = -2.96f * 100;
-			AnimatedSprite mySprite = GetNode<AnimatedSprite>("Icon");
 			move.JumpHeight = -3.22f * 100;
 			AnimatedSprite mySprite = GetNode<AnimatedSprite>("Sprite");
 
