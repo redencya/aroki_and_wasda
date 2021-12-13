@@ -18,12 +18,13 @@ shape = SubResource( 1 )
 [node name="StateMachine" type="Node" parent="."]
 
 [node name="Particles" type="Particles2D" parent="."]
+scale = Vector2( 1, 1 )
 emitting = false
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, 0.960015 )
 scale = Vector2( 0.99617, 1.04252 )
 frames = ExtResource( 2 )
-frame = 2
+frame = 3
 speed_scale = 2.5
 playing = true
