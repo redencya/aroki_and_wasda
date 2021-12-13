@@ -45,8 +45,6 @@ namespace Game
 			// Unless you're on a sticky surface, then you do that AND rebound from the surface
 			if (HoldTime.isTapped()) { 
 				currentDirection = currentDirection.Flip();
-				// for now it can stay, but it's deprecated so would be good to fix it
-				mySprite.FlipH = !mySprite.IsFlippedH();
 			}
 
 			// MOVE
@@ -74,10 +72,7 @@ namespace Game
 			GD.Print($"{Velocity.x} {currentDirection}");
 		}
 
-		internal class MovementTemplate
-        {
-			// This should be an easy-to-repeat, scaleable solution for implementing new gamemodes using the Tap | Hold | Release inputs.
-			// 
-        }
+
+		
 	}
 }
