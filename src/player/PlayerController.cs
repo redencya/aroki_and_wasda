@@ -40,15 +40,18 @@ namespace Game
 			move.Speed = 1.95f * 100;
 			move.JumpHeight = -2.96f * 100;
 			AnimatedSprite mySprite = GetNode<AnimatedSprite>("Icon");
+			move.JumpHeight = -3.22f * 100;
+			AnimatedSprite mySprite = GetNode<AnimatedSprite>("Sprite");
 
 			// IF you tap, you flip the character
 			// Unless you're on a sticky surface, then you do that AND rebound from the surface
 			if (HoldTime.isTapped()) { 
 				currentDirection = currentDirection.Flip();
+				mySprite.FlipH = !mySprite.FlipH;
 			}
 
 			// MOVE
-			// IF you actively hold down the action key
+			// IF you actively hold down the action keys
 			if (HoldTime.isHeld(true)) { Move(currentDirection, Exponential); }
 
 			// JUMP
