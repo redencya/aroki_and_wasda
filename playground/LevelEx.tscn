@@ -33,12 +33,13 @@ shape = SubResource( 1 )
 
 [node name="Hazards" type="Area2D" parent="Geometry"]
 script = ExtResource( 1 )
+playerSpawnerPath = NodePath("../../PlayerSpawner")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/Hazards"]
-position = Vector2( 506, 599 )
+position = Vector2( 374, 330 )
 shape = SubResource( 2 )
 
 [node name="PlayerSpawner" parent="." instance=ExtResource( 2 )]
 position = Vector2( 151, 86 )
 
-[connection signal="body_entered" from="Geometry/Hazards" to="Geometry/Hazards" method="_on_Area2D_body_entered"]
+[connection signal="body_entered" from="Geometry/Hazards" to="Geometry/Hazards" method="_on_Hazards_body_entered"]
