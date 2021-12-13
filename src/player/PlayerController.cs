@@ -9,6 +9,9 @@ namespace Game
 {
 	public class PlayerController : Actor
 	{
+		[Signal]
+		delegate void EmitDebugDisplay(Vector2 velo, Direction myDir, float hold);
+
 		public enum MoveMode
 		{
 			Regular,
@@ -38,14 +41,13 @@ namespace Game
 			move.Accel = (IsOnFloor()) ? value.Accel.Ground : value.Accel.Air ;
 			move.Decel = (IsOnFloor()) ? value.Decel.Ground : value.Decel.Air ;
 			move.Speed = 1.95f * 100;
-			move.JumpHeight = -2.96f * 100;
-			AnimatedSprite mySprite = GetNode<AnimatedSprite>("Icon");
 			move.JumpHeight = -3.22f * 100;
 			AnimatedSprite mySprite = GetNode<AnimatedSprite>("Sprite");
 
 			// IF you tap, you flip the character
 			// Unless you're on a sticky surface, then you do that AND rebound from the surface
-			if (HoldTime.isTapped()) { 
+			if (HoldTime.isTapped())
+			{
 				currentDirection = currentDirection.Flip();
 				mySprite.FlipH = !mySprite.FlipH;
 			}
@@ -72,8 +74,15 @@ namespace Game
 		{
 			base._Process(delta);
 			HoldTime.IncrementBy(delta);
-			GD.Print($"{Velocity.x} {currentDirection}");
+			EmitSignal("EmitDebugDisplay", Velocity, currentDirection, HoldTime.Hold);
 		}
 
-	}
+        public override void _Ready()
+        {
+			base._Ready();
+			Control DebugDisplay = GetNode<Control>("../../Control");
+			Connect("EmitDebugDisplay", DebugDisplay, "UpdateDisplay");
+        }
+
+    }
 }
