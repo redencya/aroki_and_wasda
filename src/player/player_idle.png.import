@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/aroki-idle.png-f9ca7717fe5289074a9a530818720fd8.stex"
+path="res://.import/player_idle.png-5c96ea5df035de1af86e9a56183f64c7.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/player/aroki-idle.png"
-dest_files=[ "res://.import/aroki-idle.png-f9ca7717fe5289074a9a530818720fd8.stex" ]
+source_file="res://src/player/player_idle.png"
+dest_files=[ "res://.import/player_idle.png-5c96ea5df035de1af86e9a56183f64c7.stex" ]
 
 [params]
 
