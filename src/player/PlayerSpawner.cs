@@ -9,7 +9,6 @@ public class PlayerSpawner : Position2D
 	public override void _Ready()
 	{
 		CreatePlayer();
-		// CONNECT signal "SpawnNewPlayer" with no extra params
 	}
 
 	public KinematicBody2D InstancePlayer()
@@ -30,7 +29,7 @@ public class PlayerSpawner : Position2D
 		CreatePlayer();
 	}
 
-	public void KilledByHazards()
+	public void Respawn()
 	{
 		RecreatePlayer();
 	}

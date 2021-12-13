@@ -18,7 +18,6 @@ shape = SubResource( 1 )
 [node name="StateMachine" type="Node" parent="."]
 
 [node name="Particles" type="Particles2D" parent="."]
-scale = Vector2( 1, 1 )
 emitting = false
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
