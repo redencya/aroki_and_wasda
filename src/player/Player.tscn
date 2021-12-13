@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://src/player/PlayerController.cs" type="Script" id=1]
 [ext_resource path="res://src/player/player_idle.tres" type="SpriteFrames" id=2]
@@ -15,19 +15,16 @@ position = Vector2( 0, 2 )
 scale = Vector2( 1, 1 )
 shape = SubResource( 1 )
 
-[node name="Cosmetic" type="Node" parent="."]
+[node name="StateMachine" type="Node" parent="."]
 
-[node name="Particles" type="Particles2D" parent="Cosmetic"]
-scale = Vector2( 0.986324, 1.04165 )
+[node name="Particles" type="Particles2D" parent="."]
+scale = Vector2( 1, 1 )
 emitting = false
 
-[node name="Sprite" type="AnimatedSprite" parent="Cosmetic"]
-position = Vector2( 0, 1 )
-scale = Vector2( 0.986324, 1.04165 )
+[node name="Sprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0, 0.960015 )
+scale = Vector2( 0.99617, 1.04252 )
 frames = ExtResource( 2 )
-frame = 2
+frame = 3
 speed_scale = 2.5
 playing = true
-
-[node name="StateMachine" type="Node" parent="."]
-script = ExtResource( 3 )
