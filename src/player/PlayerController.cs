@@ -72,7 +72,5 @@ namespace Game
 			GD.Print($"{Velocity.x} {currentDirection}");
 		}
 
-
-		
 	}
 }

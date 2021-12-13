@@ -23,9 +23,7 @@ namespace Game
 		}
 
 		public const float gravity = 8.667f * 100;
-
 		public (float Accel, float Decel, float Speed, float JumpHeight) move;
-
 		public Vector2 Velocity = Vector2.Zero;
 
 		/// <summary>
